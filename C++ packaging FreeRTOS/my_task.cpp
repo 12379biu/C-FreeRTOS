@@ -1,10 +1,8 @@
 #include "my_task.h"
 
-#define 	Delay_ms(ms)	vTaskDelay(pdMS_TO_TICKS(ms))
-
 /* 任务属性赋值 */
-TaskBase::TaskBase (const char * const Name,const uint16_t Size,UBaseType_t Pri):
-pcName(Name),Task_Size(Size),Priority(Pri),Handler(NULL)
+TaskBase::TaskBase (const char * const Name,const uint16_t Size,UBaseType_t Pri, void *arg):
+pcName(Name),Task_Size(Size),Priority(Pri),Handler(NULL),task_arg(arg)
 {
     xTaskCreate(App,pcName,Task_Size,this,Priority,&Handler);
 }
@@ -13,7 +11,7 @@ pcName(Name),Task_Size(Size),Priority(Pri),Handler(NULL)
 void TaskBase::App(void *arg)
 {
     TaskBase *p = static_cast<TaskBase*>(arg);
-    p->task(NULL);
+    p->task(p->task_arg);
 }
 
  /* 删除任务 */

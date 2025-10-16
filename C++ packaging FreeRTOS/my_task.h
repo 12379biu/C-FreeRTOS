@@ -15,6 +15,7 @@ protected:
 	const uint16_t Task_Size;
 	UBaseType_t Priority;
 	TaskHandle_t Handler;
+	void *task_arg;
 
 public:
 	void vdelete(); /* 删除任务 */
@@ -25,7 +26,7 @@ public:
 	virtual void task(void *arg) = 0;//纯虚任务函数
 	unsigned portBASE_TYPE uxGetWater();//获取高水位值
 	TaskHandle_t getHandle(){return Handler;}/* 获取句柄 */
-	TaskBase (const char * const Name,const uint16_t Size,UBaseType_t Pri);
+	TaskBase (const char * const Name,const uint16_t Size,UBaseType_t Pri, void *arg = NULL);
 };
 	
 
